@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><DeployerSpec exitOnError="true" sourceType="Repository">
+	<DeployerServer>
+		<host>localhost:5555</host>
+		<user>Administrator</user>
+		<pwd>{AES}Y5IgMqjfvkgbg7p5VUZztw==</pwd>
+	</DeployerServer>
+  <Environment>
+		  
+	  <MFT>
+			<mftalias name="Global_Dev">
+				<host>10.225.140.22</host>
+				<port>52111</port>
+				<user>Administrator</user>
+				<pwd>GB_DEV@123</pwd>
+				<useSSL>true</useSSL>
+				<version>10.7</version>
+				<Test>true</Test>
+			</mftalias>
+	</MFT>
+	  <IS>
+			<isalias name="Global_Dev">
+				<host>10.225.140.22</host>
+				<port>52111</port>
+				<user>Administrator</user>
+				<pwd>GB_DEV@123</pwd>
+				<useSSL>true</useSSL>
+				<installDeployerResource>false</installDeployerResource>
+				<Test>true</Test>
+			</isalias>
+		</IS>
+		<Repository>
+			<repalias name="RepoSource_Demo_DEV">
+				<type>FlatFile</type>
+				<urlOrDirectory>D:\SAG_Composites_Deploy\DEV\Demo</urlOrDirectory>
+				<Test>true</Test>
+			</repalias>
+		</Repository>	
+	</Environment>
+
+	<Projects projectPrefix="ESB_">
+		<Project description="IS Event Only" ignoreMissingDependencies="true" name="Demo_To_DEV" overwrite="true" type="Repository">
+
+<DeploymentSet autoResolve="full" description="" name="myDeploymentSet" srcAlias="RepoSource_Demo_DEV">
+<Composite displayName="Demo" name="Demo" srcAlias="RepoSource_Demo_DEV" type="IS"/>
+<Composite displayName="ActiveTransfer_*" name="ActiveTransfer_*" srcAlias="RepoSource_Demo_DEV" type="MFT"/>
+
+</DeploymentSet>
+<DeploymentMap description="" name="myDeploymentMap"/>
+<MapSetMapping mapName="myDeploymentMap" setName="myDeploymentSet">
+<alias type="IS">Global_Dev</alias>
+<alias type="MFT">Global_Dev</alias>
+
+</MapSetMapping>
+			
+	<DeploymentCandidate description="" mapName="myDeploymentMap" name="myDeployment"/>
+		</Project>		
+	</Projects>
+</DeployerSpec>
